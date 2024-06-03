@@ -33,8 +33,8 @@ public class Actor {
     @Column(name="biography",length = 750)
     private String biography;
 
-    @Column(name = "profilePictureUrl")
-    private String profilePictureUrl;
+    @Column(name = "profilePictureName")
+    private String profilePictureName;
 
     @Column(name = "drivingExperience")
     private Integer driverExperience;

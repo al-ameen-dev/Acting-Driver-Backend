@@ -23,7 +23,7 @@ import java.util.function.Function;
 @RequiredArgsConstructor
 public class JWTServiceImpl implements JWTService{
         @Autowired
-        private MessageDigest messageDigest;
+        private final MessageDigest messageDigest;
         private static final String SECRET_KEY = "mysecret";
         public String extractUserName(String jwtToken) {
             return extractClaim(jwtToken, Claims::getSubject);

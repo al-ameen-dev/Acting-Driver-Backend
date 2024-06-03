@@ -1,15 +1,15 @@
 package com.alameendev.ActingDriver.job.entity;
 
+import com.alameendev.ActingDriver.client.entity.Client;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import com.alameendev.ActingDriver.client.entity.Client;
-
-import java.time.OffsetTime;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Builder
@@ -41,11 +41,12 @@ public class Job {
 
     @Temporal(TemporalType.DATE)
     @Column(name = "date")
-    private Date date;
+    private LocalDate date;
 
     @Temporal(TemporalType.TIME)
     @Column(name = "time")
-    private OffsetTime time;
+    @JsonFormat(pattern = "HH:mm:ss")
+    private LocalTime time;
 
     @Column(name = "jobStatus")
     @Enumerated(EnumType.STRING)

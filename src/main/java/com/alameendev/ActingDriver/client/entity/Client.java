@@ -28,8 +28,8 @@ public class Client {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "profilePictureUrl")
-    private String profilePictureUrl;
+    @Column(name = "profilePictureName")
+    private String profilePictureName;
 
     @Column(name = "phone")
     private String phone;
@@ -39,4 +39,9 @@ public class Client {
 
     @OneToMany(mappedBy = "client",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Car> cars;
+
+    public void addCar(Car car){
+        cars.add(car);
+    }
+
 }

@@ -18,7 +18,7 @@ public interface ActorService {
 
     Actor saveActor(Actor actor);
 
-    ActorProfileResponseDTO updateProfileWithId(Long id, ActorProfileUpdateDTO body);
+    ActorProfileResponseDTO updateProfile(ActorProfileUpdateDTO body);
 
-    AvailabilityStatus updateAvailabilityStatusWithId(Long id, AvailabilityStatus status);
+    AvailabilityStatus updateAvailabilityStatus(AvailabilityStatus status);
 }

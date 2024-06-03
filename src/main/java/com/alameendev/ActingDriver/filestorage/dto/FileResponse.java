@@ -10,9 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class FileUploadSuccessResponseDTO {
-
-    private String filePath;
-    private boolean isUploaded;
-
+public class FileResponse {
+    private String fileName;
+    private byte[] fileData;
 }

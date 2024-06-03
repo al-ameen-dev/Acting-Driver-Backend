@@ -1,4 +1,4 @@
-package com.alameendev.ActingDriver.exceptions.fileupload;
+package com.alameendev.ActingDriver.exceptions.filestorage;
 
 public class ProfileImageNotFoundException extends IllegalArgumentException{
 

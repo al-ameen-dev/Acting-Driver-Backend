@@ -11,6 +11,7 @@ import com.alameendev.ActingDriver.user.entity.User;
 import com.alameendev.ActingDriver.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,7 +36,7 @@ public class ActorServiceImpl implements ActorService{
 
     @Override
     public Actor retrieveActorByUser(User user) {
-        return actorRepository.findById(user.getUserId()).orElseThrow(()->new ActorNotFoundException(user.getUserId()));
+        return actorRepository.findByUser(user).orElseThrow(()->new ActorNotFoundException(user.getUserId()));
     }
 
     @Override
@@ -44,20 +45,27 @@ public class ActorServiceImpl implements ActorService{
     }
 
     @Override
-    public ActorProfileResponseDTO updateProfileWithId(Long id, ActorProfileUpdateDTO body) {
-        Actor actor = actorRepository.findByUserUserId(id).orElseThrow(()->new UserNotFoundException(id));
+    public ActorProfileResponseDTO updateProfile(ActorProfileUpdateDTO body) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.getUserByEmail(email);
+        Actor actor = actorRepository.findByUser(user).orElseThrow(()->new UserNotFoundException(user.getUserId()));
         actor.setAvailabilityStatus(body.getAvailabilityStatus());
         actor.setCredentials(body.getCredentials());
         actor.setDriverExperience(body.getDriverExperience());
         actor.setName(body.getName());
+        actor.setPhone(body.getPhone());
+        actor.setBiography(body.getBiography());
         actorRepository.save(actor);
         return modelMapper.map(actor,ActorProfileResponseDTO.class);
     }
 
     @Override
-    public AvailabilityStatus updateAvailabilityStatusWithId(Long id, AvailabilityStatus status) {
-        Actor actor = actorRepository.findByUserUserId(id).orElseThrow(()->new UserNotFoundException(id));
+    public AvailabilityStatus updateAvailabilityStatus(AvailabilityStatus status) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.getUserByEmail(email);
+        Actor actor = actorRepository.findByUser(user).orElseThrow(()->new UserNotFoundException(user.getUserId()));
         actor.setAvailabilityStatus(status);
+        actorRepository.save(actor);
         return status;
     }
 }

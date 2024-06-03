@@ -30,9 +30,6 @@ public class JWTAuthenticationServiceImpl implements JWTAuthenticationService {
     private final ActorService actorService;
     private final ClientService clientService;
 
-    @Value("${spring.servlet.multipart.location}")
-    private String uploadPath;
-
     @Value("${file.dummyProfile}")
     private String dummyProfile;
 
@@ -57,11 +54,12 @@ public class JWTAuthenticationServiceImpl implements JWTAuthenticationService {
         switch (user.getRole()){
             case ACTOR -> {
                 Actor actor = Actor.builder().user(user).name(user.getFirstName()+" "+user.getLastName())
-                        .profilePictureUrl(uploadPath+dummyProfile).build();
+                        .profilePictureName(dummyProfile).build();
                 actorService.saveActor(actor);
             }
             case CLIENT -> {
-                Client client = Client.builder().user(user).name(user.getFirstName()+" "+user.getLastName()).build();
+                Client client = Client.builder().user(user).name(user.getFirstName()+" "+user.getLastName())
+                        .profilePictureName(dummyProfile).build();
                 clientService.saveClient(client);
             }
         }

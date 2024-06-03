@@ -1,13 +1,14 @@
 package com.alameendev.ActingDriver.filestorage.service;
 
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
 public interface FileStorageService {
 
-    String uploadFile(MultipartFile file, String email) throws IOException;
-    byte[] getFile(String email);
+    ByteArrayResource uploadFile(MultipartFile file) throws IOException;
+    ByteArrayResource getFile();
 
-    byte[] deleteFile(String email);
+    ByteArrayResource deleteFile();
 }
