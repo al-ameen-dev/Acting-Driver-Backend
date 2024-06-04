@@ -1,4 +1,4 @@
-package com.alameendev.ActingDriver.dto;
+package com.alameendev.ActingDriver.jwtauthentication.dto;
 
 
 import com.alameendev.ActingDriver.user.entity.Gender;

@@ -1,5 +1,6 @@
 package com.alameendev.ActingDriver.client.entity;
 
+import com.alameendev.ActingDriver.car.entity.Car;
 import com.alameendev.ActingDriver.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

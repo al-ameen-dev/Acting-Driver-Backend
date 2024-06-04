@@ -6,11 +6,15 @@ import com.alameendev.ActingDriver.exceptions.job.JobNotFoundException;
 import com.alameendev.ActingDriver.job.dto.JobResponseDTO;
 import com.alameendev.ActingDriver.job.dto.JobUpdateDTO;
 import com.alameendev.ActingDriver.job.entity.Job;
+import com.alameendev.ActingDriver.job.repository.JobPagingRepository;
 import com.alameendev.ActingDriver.job.repository.JobRepository;
 import com.alameendev.ActingDriver.user.entity.User;
 import com.alameendev.ActingDriver.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -23,13 +27,22 @@ import java.util.stream.Collectors;
 public class JobServiceImpl implements JobService {
 
     private final JobRepository jobRepository;
+    private final JobPagingRepository jobPagingRepository;
     private final UserService userService;
     private final ClientService clientService;
     private final ModelMapper modelMapper;
 
     @Override
-    public List<Job> retriveAllJobs() {
-        return jobRepository.findAll();
+    public List<JobResponseDTO> retriveAllJobs() {
+        List<Job> jobs = jobRepository.findAll();
+        return jobs.stream().map((job)->modelMapper.map(job,JobResponseDTO.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<JobResponseDTO> retrieveAllJobByPaging(Integer page, Integer size) {
+        Pageable customPage = PageRequest.of(page,size);
+        Page<Job> jobs = jobPagingRepository.findAll(customPage);
+        return jobs.stream().map(job->modelMapper.map(job,JobResponseDTO.class)).collect(Collectors.toList());
     }
 
     @Override
@@ -54,6 +67,7 @@ public class JobServiceImpl implements JobService {
         jobRepository.save(job);
         return modelMapper.map(job,JobResponseDTO.class);
     }
+
     @Override
     public List<JobResponseDTO> retriveAllJobForClient(Client client) {
         List<Job> listJobs = jobRepository.findByClient(client);

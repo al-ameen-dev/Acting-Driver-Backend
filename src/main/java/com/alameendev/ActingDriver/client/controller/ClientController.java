@@ -1,9 +1,9 @@
 package com.alameendev.ActingDriver.client.controller;
 
-import com.alameendev.ActingDriver.client.dto.CarResponseDTO;
+import com.alameendev.ActingDriver.car.dto.CarDTO;
 import com.alameendev.ActingDriver.client.dto.ClientProfileResponseDTO;
 import com.alameendev.ActingDriver.client.dto.ClientProfileUpdateDTO;
-import com.alameendev.ActingDriver.client.entity.Car;
+import com.alameendev.ActingDriver.car.entity.Car;
 import com.alameendev.ActingDriver.client.entity.Client;
 import com.alameendev.ActingDriver.client.service.ClientService;
 import com.alameendev.ActingDriver.job.dto.JobResponseDTO;
@@ -36,11 +36,11 @@ public class ClientController {
     @Operation(summary = "API endpoint for Retrieving specific Client by Id using GET Request")
     @GetMapping("/{id}")
     public ResponseEntity<ClientProfileResponseDTO> getClientById(@PathVariable Long id){
-        return ResponseEntity.ok(clientService.retrieveClientById(id));
+        return ResponseEntity.ok(clientService.retrieveClientProfileById(id));
     }
 
-    @Operation(summary = "API endpoint for updating the client profile using POST Request")
-    @PutMapping("/update-profile")
+    @Operation(summary = "API endpoint for updating the client profile using PUT Request")
+    @PutMapping("")
     public ResponseEntity<ClientProfileUpdateDTO> updateClientProfile(@RequestBody ClientProfileUpdateDTO body){
         return ResponseEntity.ok(clientService.updateProfile(body));
 
@@ -48,7 +48,7 @@ public class ClientController {
 
     @Operation(summary = "API endpoint for add car to the specific client using POST Request")
     @PostMapping("/add-car")
-    public ResponseEntity<CarResponseDTO> addCar(@RequestBody Car body){
+    public ResponseEntity<CarDTO> addCar(@RequestBody Car body){
         return ResponseEntity.ok(clientService.addCar(body));
     }
 
@@ -58,11 +58,19 @@ public class ClientController {
         return ResponseEntity.ok(jobService.createJob(body));
     }
 
-    @Operation(summary = "API endpoint for retrieving the Job for the speicific Client")
-    @GetMapping("/{id}/jobs")
+    @Operation(summary = "API endpoint for retrieving the Jobs for the current logged in Client using GET Request")
+    @GetMapping("/jobs")
     public ResponseEntity<List<JobResponseDTO>> getJobsForTheClient(){
         User user = userService.getUser();
         Client client = clientService.retrieveClientByUser(user);
         return ResponseEntity.ok(jobService.retriveAllJobForClient(client));
     }
+
+    @Operation(summary = "API endpoint for retrieving Jobs for the Client by Client Id using GET Request")
+    @GetMapping("/{id}/jobs")
+    public ResponseEntity<List<JobResponseDTO>> getJobsForTheClientUsingClientId(@PathVariable Long id){
+        Client client = clientService.retrieveClientById(id);
+        return ResponseEntity.ok(jobService.retriveAllJobForClient(client));
+    }
+
 }

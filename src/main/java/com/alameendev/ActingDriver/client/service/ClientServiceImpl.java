@@ -1,9 +1,9 @@
 package com.alameendev.ActingDriver.client.service;
 
-import com.alameendev.ActingDriver.client.dto.CarResponseDTO;
+import com.alameendev.ActingDriver.car.dto.CarDTO;
+import com.alameendev.ActingDriver.car.entity.Car;
 import com.alameendev.ActingDriver.client.dto.ClientProfileResponseDTO;
 import com.alameendev.ActingDriver.client.dto.ClientProfileUpdateDTO;
-import com.alameendev.ActingDriver.client.entity.Car;
 import com.alameendev.ActingDriver.client.entity.Client;
 import com.alameendev.ActingDriver.client.repository.ClientRepository;
 import com.alameendev.ActingDriver.exceptions.client.ClientNotFoundException;
@@ -22,6 +22,7 @@ public class ClientServiceImpl implements ClientService{
     private final ClientRepository clientRepository;
     private final UserService userService;
     private final ModelMapper modelMapper;
+    //private final CarService carService;
 
     @Override
     public List<Client> retriveAllClients() {
@@ -40,7 +41,7 @@ public class ClientServiceImpl implements ClientService{
     }
 
     @Override
-    public CarResponseDTO addCar(Car body) {
+    public CarDTO addCar(Car body) {
         User user = userService.getUser();
         Client client = clientRepository.findByUser(user).orElseThrow(()-> new ClientNotFoundException(user.getUserId()));
         Car car = Car.builder().carNumber(body.getCarNumber())
@@ -48,7 +49,7 @@ public class ClientServiceImpl implements ClientService{
                         .model(body.getModel()).build();
         client.addCar(car);
         clientRepository.save(client);
-        return modelMapper.map(car,CarResponseDTO.class);
+        return modelMapper.map(car, CarDTO.class);
     }
 
     @Override
@@ -57,9 +58,20 @@ public class ClientServiceImpl implements ClientService{
     }
 
     @Override
-    public ClientProfileResponseDTO retrieveClientById(Long id) {
+    public Client getClient() {
+        User user = userService.getUser();
+        return clientRepository.findByUser(user).orElseThrow(()-> new ClientNotFoundException(user.getUserId()));
+    }
+
+    @Override
+    public ClientProfileResponseDTO retrieveClientProfileById(Long id) {
         Client client = clientRepository.findById(id).orElseThrow(()->new ClientNotFoundException(id));
         return modelMapper.map(client,ClientProfileResponseDTO.class);
+    }
+
+    @Override
+    public Client retrieveClientById(Long id) {
+        return clientRepository.findById(id).orElseThrow(()-> new ClientNotFoundException(id));
     }
 
     @Override

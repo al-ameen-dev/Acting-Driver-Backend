@@ -1,5 +1,4 @@
-package com.alameendev.ActingDriver.dto;
-
+package com.alameendev.ActingDriver.car.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationRequest {
-    private String email;
-    private String password;
+public class CarDTO {
+    private Long carId;
+    private String carNumber;
+    private String model;
 }

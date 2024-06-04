@@ -19,7 +19,7 @@ public class UserProfile {
     @Column(name = "profileId")
     private Long id;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "userid",nullable = false)
     private User user;
 

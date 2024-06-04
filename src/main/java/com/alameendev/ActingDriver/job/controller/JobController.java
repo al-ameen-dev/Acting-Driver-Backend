@@ -19,14 +19,20 @@ public class JobController {
 
     private final JobService jobService;
 
+    @Operation(summary = "Api endpoint for retrieving jobs by pagination using GET Request. Query parameters ?page='value'&&size='value'")
+    @GetMapping("/paging")
+    public ResponseEntity<List<JobResponseDTO>> getJobsByPaging(@RequestParam Integer page,@RequestParam Integer size){
+        return ResponseEntity.ok(jobService.retrieveAllJobByPaging(page,size));
+    }
+
     @Operation(summary = "Api endpoint for retrieving all available job using GET Request")
     @GetMapping("")
-    public ResponseEntity<List<Job>> getAllJobs(){
+    public ResponseEntity<List<JobResponseDTO>> getAllJobs(){
         return ResponseEntity.ok(jobService.retriveAllJobs());
     }
 
     @Operation(summary = "Api endpoint for creating the Job using POST Request")
-    @PostMapping("/create-job")
+    @PostMapping("")
     public ResponseEntity<JobResponseDTO> createJob(@RequestBody Job body){
         return ResponseEntity.ok(jobService.createJob(body));
     }

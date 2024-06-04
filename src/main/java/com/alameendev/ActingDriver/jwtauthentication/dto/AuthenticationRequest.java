@@ -1,4 +1,4 @@
-package com.alameendev.ActingDriver.dto;
+package com.alameendev.ActingDriver.jwtauthentication.dto;
 
 
 import lombok.AllArgsConstructor;
@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationResponse {
-    private String token;
+public class AuthenticationRequest {
+    private String email;
+    private String password;
 }

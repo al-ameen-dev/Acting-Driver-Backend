@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface JobService {
 
-    List<Job> retriveAllJobs();
+    List<JobResponseDTO> retriveAllJobs();
 
     List<JobResponseDTO> retriveAllJobForClient(Client client);
 
@@ -20,4 +20,6 @@ public interface JobService {
     void deleteJobById(Long id);
 
     JobResponseDTO createJob(Job body);
+
+    List<JobResponseDTO> retrieveAllJobByPaging(Integer page, Integer size);
 }

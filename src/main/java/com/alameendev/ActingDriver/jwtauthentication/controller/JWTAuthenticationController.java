@@ -1,8 +1,8 @@
 package com.alameendev.ActingDriver.jwtauthentication.controller;
 
-import com.alameendev.ActingDriver.dto.AuthenticationRequest;
-import com.alameendev.ActingDriver.dto.AuthenticationResponse;
-import com.alameendev.ActingDriver.dto.RegisterRequest;
+import com.alameendev.ActingDriver.jwtauthentication.dto.AuthenticationRequest;
+import com.alameendev.ActingDriver.jwtauthentication.dto.AuthenticationResponse;
+import com.alameendev.ActingDriver.jwtauthentication.dto.RegisterRequest;
 import com.alameendev.ActingDriver.jwtauthentication.service.JWTAuthenticationService;
 import com.alameendev.ActingDriver.user.dto.PasswordForgetDTO;
 import com.alameendev.ActingDriver.user.dto.PasswordResetDTO;
@@ -34,9 +34,7 @@ public class JWTAuthenticationController {
 
     @Operation(summary = "API endpoint for retrieving the authToken using POST Request")
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> authenticate(
-            @RequestBody AuthenticationRequest request
-            )
+    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request)
     {
         return ResponseEntity.ok(jwtAuthenticationService.authenticate(request));
     }

@@ -15,6 +15,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 public class JobResponseDTO{
     private Long jobId;
+    private Long clientId;
     private String title;
     private String description;
     private String requirements;
