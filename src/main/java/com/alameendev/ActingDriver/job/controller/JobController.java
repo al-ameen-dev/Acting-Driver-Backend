@@ -2,7 +2,6 @@ package com.alameendev.ActingDriver.job.controller;
 
 import com.alameendev.ActingDriver.job.dto.JobResponseDTO;
 import com.alameendev.ActingDriver.job.dto.JobUpdateDTO;
-import com.alameendev.ActingDriver.job.entity.Job;
 import com.alameendev.ActingDriver.job.service.JobService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -33,9 +32,16 @@ public class JobController {
 
     @Operation(summary = "Api endpoint for creating the Job using POST Request")
     @PostMapping("")
-    public ResponseEntity<JobResponseDTO> createJob(@RequestBody Job body){
+    public ResponseEntity<JobResponseDTO> createJob(@RequestBody JobResponseDTO body){
         return ResponseEntity.ok(jobService.createJob(body));
     }
+
+    @Operation(summary = "Api endpoint for creating the Job by Client Id using POST Request")
+    @PostMapping("{id}")
+    public ResponseEntity<JobResponseDTO> createJob(@PathVariable Long id,@RequestBody JobResponseDTO body){
+        return ResponseEntity.ok(jobService.createJobByClientId(id,body));
+    }
+
 
     @Operation(summary = "Api endpoint for specific job by Id using GET Request")
     @GetMapping("/{id}")

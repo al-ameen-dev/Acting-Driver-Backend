@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.core.io.ByteArrayResource;
 
 @Data
 @Builder
@@ -12,5 +13,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class FileResponse {
     private String fileName;
-    private byte[] fileData;
+    private ByteArrayResource fileData;
 }

@@ -34,10 +34,11 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth->
-                        auth.requestMatchers("/api/v1/auth/register").permitAll()
-                                .requestMatchers(AUTH_WHITELIST).permitAll()
-                                .requestMatchers("/api/v1/auth/login").permitAll()
-                                .anyRequest().authenticated()
+//                        auth.requestMatchers("/api/v1/auth/register").permitAll()
+//                                .requestMatchers(AUTH_WHITELIST).permitAll()
+//                                .requestMatchers("/api/v1/auth/login").permitAll()
+//                                .anyRequest().authenticated()
+                        auth.requestMatchers("**").permitAll()
                 ).sessionManagement(session->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 ).authenticationProvider(authenticationProvider)

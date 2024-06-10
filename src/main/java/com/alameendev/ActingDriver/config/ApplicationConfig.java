@@ -2,6 +2,7 @@ package com.alameendev.ActingDriver.config;
 
 
 import com.alameendev.ActingDriver.user.repository.UserRepository;
+import com.alameendev.ActingDriver.utility.ContentTypeRetriever;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
@@ -58,5 +59,10 @@ public class ApplicationConfig {
     @Bean
     public ModelMapper modelMapper(){
         return new ModelMapper();
+    }
+
+    @Bean
+    public ContentTypeRetriever contentTypeRetrieve(){
+        return new ContentTypeRetriever();
     }
 }

@@ -1,7 +1,6 @@
 package com.alameendev.ActingDriver.job.entity;
 
 import com.alameendev.ActingDriver.client.entity.Client;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,16 +35,18 @@ public class Job {
     @Column(name = "requirements")
     private String requirements;
 
-    @Column(name = "location")
-    private String location;
+    @Column(name = "pickupLocation")
+    private String pickupLocation;
+
+    @Column(name= "dropOffLocation")
+    private String dropOffLocation;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "date")
+    @Column(name = "jobPostedDate")
     private LocalDate date;
 
     @Temporal(TemporalType.TIME)
-    @Column(name = "time")
-    @JsonFormat(pattern = "HH:mm:ss")
+    @Column(name = "jobPostedTime")
     private LocalTime time;
 
     @Column(name = "jobStatus")

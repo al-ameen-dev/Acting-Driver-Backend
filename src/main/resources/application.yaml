@@ -4,7 +4,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
   datasource:
     url: jdbc:mysql://localhost:3306/actingdriver
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -21,6 +21,10 @@ spring:
 
 file:
   dummyProfile: dummyProfile.png
-  upload-dir: ./src/main/resources/upload
+  dummyCar: dummyCar.png
+  dummyImage-dir: ./src/main/resources/uploads
+  actor-profile-upload-dir: ./src/main/resources/uploads/actors/profiles-images
+  client-profile-upload-dir: ./src/main/resources/uploads/clients/profile-images
+  car-upload-dir: ./src/main/resources/uploads/cars/car-images
 
 

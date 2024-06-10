@@ -19,7 +19,11 @@ public interface JobService {
 
     void deleteJobById(Long id);
 
-    JobResponseDTO createJob(Job body);
+    JobResponseDTO createJob(JobResponseDTO body);
 
     List<JobResponseDTO> retrieveAllJobByPaging(Integer page, Integer size);
+
+    JobResponseDTO createJobByClientId(Long id, JobResponseDTO body);
+
+    Job retrieveJobEntityById(Long id);
 }

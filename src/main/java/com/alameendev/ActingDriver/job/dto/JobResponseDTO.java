@@ -19,7 +19,8 @@ public class JobResponseDTO{
     private String title;
     private String description;
     private String requirements;
-    private String location;
+    private String pickupLocation;
+    private String dropOffLocation;
     private LocalDate date;
     private LocalTime time;
     private JobStatus jobStatus;

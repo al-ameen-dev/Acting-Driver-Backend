@@ -46,7 +46,30 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public JobResponseDTO createJob(Job body) {
+    public JobResponseDTO createJobByClientId(Long id, JobResponseDTO body) {
+        Client client = clientService.retrieveClientById(id);
+        Job job = Job.builder()
+                .client(client)
+                .jobStatus(body.getJobStatus())
+                .date(body.getDate())
+                .time(body.getTime())
+                .description(body.getDescription())
+                .requirements(body.getRequirements())
+                .pickupLocation(body.getPickupLocation())
+                .dropOffLocation(body.getDropOffLocation())
+                .title(body.getTitle())
+                .build();
+        jobRepository.save(job);
+        return modelMapper.map(job,JobResponseDTO.class);
+    }
+
+    @Override
+    public Job retrieveJobEntityById(Long id) {
+        return jobRepository.findById(id).orElseThrow(()->new JobNotFoundException(id));
+    }
+
+    @Override
+    public JobResponseDTO createJob(JobResponseDTO body) {
         User user = userService.getUser();
         Client client = clientService.retrieveClientByUser(user);
 //        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -61,7 +84,8 @@ public class JobServiceImpl implements JobService {
                 .time(body.getTime())
                 .description(body.getDescription())
                 .requirements(body.getRequirements())
-                .location(body.getLocation())
+                .pickupLocation(body.getPickupLocation())
+                .dropOffLocation(body.getDropOffLocation())
                 .title(body.getTitle())
                 .build();
         jobRepository.save(job);
@@ -71,8 +95,7 @@ public class JobServiceImpl implements JobService {
     @Override
     public List<JobResponseDTO> retriveAllJobForClient(Client client) {
         List<Job> listJobs = jobRepository.findByClient(client);
-        List<JobResponseDTO> jobs = listJobs.stream().map(job -> modelMapper.map(job,JobResponseDTO.class)).collect(Collectors.toList());
-        return jobs;
+        return listJobs.stream().map(job -> modelMapper.map(job,JobResponseDTO.class)).collect(Collectors.toList());
     }
 
     @Override
@@ -88,7 +111,8 @@ public class JobServiceImpl implements JobService {
         job.setDate(LocalDate.parse(body.getDate()));
         job.setTime(LocalTime.parse(body.getTime()));
         job.setDescription(body.getDescription());
-        job.setLocation(body.getLocation());
+        job.setPickupLocation(body.getPickupLocation());
+        job.setDropOffLocation(body.getDropOffLocation());
         job.setRequirements(body.getRequirements());
         job.setTitle(body.getTitle());
         jobRepository.save(job);

@@ -2,6 +2,7 @@ package com.alameendev.ActingDriver.booking.entity;
 
 
 import com.alameendev.ActingDriver.actor.entity.Actor;
+import com.alameendev.ActingDriver.client.entity.Client;
 import com.alameendev.ActingDriver.job.entity.Job;
 import com.alameendev.ActingDriver.review.entity.Review;
 import jakarta.persistence.*;
@@ -10,8 +11,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.OffsetTime;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -31,23 +32,28 @@ public class Booking {
     private Job job;
 
     @ManyToOne
+    @JoinColumn(name = "clientId",nullable = false)
+    private Client client;
+
+    @ManyToOne
     @JoinColumn(name = "actorId",nullable = false)
     private Actor actor;
 
     @Temporal(TemporalType.DATE)
-    private Date bookingDate;
+    private LocalDate bookingDate;
 
     @Temporal(TemporalType.TIME)
-    private OffsetTime bookingTime;
+    private LocalTime bookingTime;
 
     @OneToMany(mappedBy = "booking",orphanRemoval = true,cascade = CascadeType.ALL)
     private List<Review> reviews;
 
+    @Column(name = "bookingStatus")
+    @Enumerated(EnumType.STRING)
+    private BookingStatus bookingStatus;
+
     @Column(name = "paymentStatus")
     @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
-
-
-
 
 }

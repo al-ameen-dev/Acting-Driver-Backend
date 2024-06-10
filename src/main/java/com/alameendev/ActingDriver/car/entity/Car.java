@@ -25,6 +25,9 @@ public class Car {
     @Column(name = "model")
     private String model;
 
+    @Column(name = "carImageName")
+    private String carImageName;
+
     @ManyToOne
     @JoinColumn(name = "clientId",nullable = false)
     private Client client;

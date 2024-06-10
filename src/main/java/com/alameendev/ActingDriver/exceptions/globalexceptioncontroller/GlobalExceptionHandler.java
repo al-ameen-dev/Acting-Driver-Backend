@@ -2,6 +2,7 @@ package com.alameendev.ActingDriver.exceptions.globalexceptioncontroller;
 
 
 import com.alameendev.ActingDriver.exceptions.actor.ActorNotFoundException;
+import com.alameendev.ActingDriver.exceptions.booking.BookingNotFoundException;
 import com.alameendev.ActingDriver.exceptions.car.CarNotFoundException;
 import com.alameendev.ActingDriver.exceptions.client.ClientNotFoundException;
 import com.alameendev.ActingDriver.exceptions.dto.ErrorResponseDTO;
@@ -51,6 +52,9 @@ public class GlobalExceptionHandler {
         }else if(ex instanceof UserAlreadyExistException){
             message = ex.getMessage();
             status = HttpStatus.IM_USED;
+        }else if(ex instanceof BookingNotFoundException){
+            message = ex.getMessage();
+            status = HttpStatus.NOT_FOUND;
         }else{
             message = "something went wrong";
             status = HttpStatus.INTERNAL_SERVER_ERROR;
